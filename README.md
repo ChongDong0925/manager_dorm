@@ -58,8 +58,18 @@ MySQL 8.0+
 <img width="480" src="https://github.com/user-attachments/assets/703e0713-0124-4686-9fa6-d94e3006b1d6" alt="监控大屏2">
 </p>
 
-### 3. 其余业务模块
-宿舍管理、维修任务、排班、考勤、维护人员管理页面截图**后续分批补充上传**；
+### 3. 宿舍信息管理模块
+<p align="center">
+<img width="420" src="https://github.com/user-attachments/assets/a81f7b21-3fb7-46af-8b3e-1b2382e403dc" alt="宿舍列表总览">
+<img width="420" src="https://github.com/user-attachments/assets/7f6a7eb5-45e4-4392-857c-08e25729eedc" alt="新增/编辑宿舍弹窗">
+</p>
+<p align="center">
+<img width="420" src="https://github.com/user-attachments/assets/c125ab3a-81a2-491c-91f6-a07895671338" alt="宿舍状态查看">
+<img width="420" src="https://github.com/user-attachments/assets/7904290b-eaf4-45da-a3c6-e8832e2a7526" alt="宿舍信息检索筛选">
+</p>
+
+### 4. 其余业务模块
+维修任务、排班、考勤、维护人员管理页面截图**后续分批补充上传**；
 如需完整预览，本地拉取项目运行 `http://localhost:8083` 即可查看全部界面。
 
 ## 📁 完整项目目录（点击展开查看）
