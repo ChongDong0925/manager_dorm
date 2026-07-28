@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑任务 - 宿舍管理系统</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <!-- 自定义CSS -->
+    <link rel="stylesheet" href="/static/css/custom.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">宿舍管理系统</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">大屏监控</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dorm/list">宿舍管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/task/list">任务管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/schedule/list">排班管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/attendance/list">考勤管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/list">人员管理</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">退出登录</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="container-fluid mt-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3><i class="fa fa-edit"></i> 编辑任务</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="/task/update" method="post">
+                            <input type="hidden" name="id" th:value="${task.id}">
+                            <div class="mb-3">
+                                <label for="taskId" class="form-label">任务编号</label>
+                                <input type="text" class="form-control" id="taskId" name="taskId" th:value="${task.taskId}" required readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="taskType" class="form-label">任务类型</label>
+                                <select class="form-select" id="taskType" name="taskType" required>
+                                    <option value="维修" th:selected="${task.taskType == '维修'}">维修</option>
+                                    <option value="养护" th:selected="${task.taskType == '养护'}">养护</option>
+                                    <option value="清扫" th:selected="${task.taskType == '清扫'}">清扫</option>
+                                    <option value="其他" th:selected="${task.taskType == '其他'}">其他</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="dormNumber" class="form-label">宿舍号</label>
+                                <input type="text" class="form-control" id="dormNumber" name="dormNumber" th:value="${task.dormNumber}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="building" class="form-label">楼栋</label>
+                                <input type="text" class="form-control" id="building" name="building" th:value="${task.building}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">任务描述</label>
+                                <textarea class="form-control" id="description" name="description" rows="3" required th:text="${task.description}"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="assignStaffId" class="form-label">分配人员</label>
+                                <select class="form-select" id="assignStaffId" name="assignStaffId" required>
+                                    <option value="" disabled>请选择人员</option>
+                                    <option th:each="staff : ${staffs}" th:value="${staff.id}" th:selected="${task.assignStaffId == staff.id}" th:text="${staff.name}"></option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="priority" class="form-label">优先级</label>
+                                <select class="form-select" id="priority" name="priority" required>
+                                    <option value="高" th:selected="${task.priority == '高'}">高</option>
+                                    <option value="中" th:selected="${task.priority == '中'}">中</option>
+                                    <option value="低" th:selected="${task.priority == '低'}">低</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="status" class="form-label">状态</label>
+                                <select class="form-select" id="status" name="status" required>
+                                    <option value="待处理" th:selected="${task.status == '待处理'}">待处理</option>
+                                    <option value="处理中" th:selected="${task.status == '处理中'}">处理中</option>
+                                    <option value="已完成" th:selected="${task.status == '已完成'}">已完成</option>
+                                    <option value="已取消" th:selected="${task.status == '已取消'}">已取消</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="remark" class="form-label">备注</label>
+                                <textarea class="form-control" id="remark" name="remark" rows="2" th:text="${task.remark}"></textarea>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <a href="/task/list" class="btn btn-secondary">取消</a>
+                                <button type="submit" class="btn btn-primary">保存修改</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">© 2026 宿舍管理系统</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+    <!-- 通用JS -->
+    <script src="/static/js/common.js"></script>
+</body>
+</html>

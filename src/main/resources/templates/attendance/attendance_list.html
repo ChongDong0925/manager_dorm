@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>考勤管理 - 宿舍管理系统</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <!-- 自定义CSS -->
+    <link rel="stylesheet" href="/static/css/custom.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">宿舍管理系统</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">大屏监控</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dorm/list">宿舍管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/task/list">任务管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/schedule/list">排班管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/attendance/list">考勤管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/list">人员管理</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">退出登录</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="container-fluid mt-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3><i class="fa fa-list-alt"></i> 考勤管理</h3>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <a href="/attendance/check" class="btn btn-primary"><i class="fa fa-clock-o"></i> 考勤打卡</a>
+                <a href="/attendance/stat" class="btn btn-secondary"><i class="fa fa-bar-chart"></i> 考勤统计</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>考勤日期</th>
+                                    <th>人员姓名</th>
+                                    <th>上班打卡时间</th>
+                                    <th>下班打卡时间</th>
+                                    <th>状态</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="attendance : ${attendances}">
+                                    <td th:text="${attendance.id}"></td>
+                                    <td th:text="${attendance.attendanceDate}"></td>
+                                    <td th:text="${attendance.staffName}"></td>
+                                    <td th:text="${attendance.checkInTime}"></td>
+                                    <td th:text="${attendance.checkOutTime}"></td>
+                                    <td>
+                                        <span th:if="${attendance.status == '正常'}" class="badge bg-success">正常</span>
+                                        <span th:if="${attendance.status == '迟到'}" class="badge bg-warning">迟到</span>
+                                        <span th:if="${attendance.status == '早退'}" class="badge bg-warning">早退</span>
+                                        <span th:if="${attendance.status == '缺勤'}" class="badge bg-danger">缺勤</span>
+                                        <span th:if="${attendance.status == '请假'}" class="badge bg-info">请假</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">© 2026 宿舍管理系统</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+    <!-- 通用JS -->
+    <script src="/static/js/common.js"></script>
+</body>
+</html>

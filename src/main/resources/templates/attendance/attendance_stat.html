@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net;">
+    <title>考勤统计 - 宿舍管理系统</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <!-- 自定义CSS -->
+    <link rel="stylesheet" href="/static/css/custom.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">宿舍管理系统</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">大屏监控</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dorm/list">宿舍管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/task/list">任务管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/schedule/list">排班管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/attendance/list">考勤管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/list">人员管理</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">退出登录</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="container-fluid mt-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3><i class="fa fa-bar-chart"></i> 考勤统计</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>考勤状态统计</h4>
+                                <div id="attendanceStatusChart" style="width: 100%; height: 300px;"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>出勤趋势</h4>
+                                <div id="attendanceTrendChart" style="width: 100%; height: 300px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">© 2026 宿舍管理系统</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+    <!-- ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <!-- 通用JS -->
+    <script src="/static/js/common.js"></script>
+    <script>
+        console.log('Script loaded');
+        
+        // 页面加载完成后执行
+        $(document).ready(function() {
+            console.log('Page loaded, initializing charts...');
+            
+            // 检查DOM元素是否存在
+            console.log('Attendance status chart element:', document.getElementById('attendanceStatusChart'));
+            console.log('Attendance trend chart element:', document.getElementById('attendanceTrendChart'));
+            
+            // 检查ECharts是否加载
+            console.log('ECharts loaded:', typeof echarts !== 'undefined');
+            
+            // 初始化考勤状态统计图表
+            var statusChart = echarts.init(document.getElementById('attendanceStatusChart'));
+            // 初始化出勤趋势图表
+            var trendChart = echarts.init(document.getElementById('attendanceTrendChart'));
+
+            // 使用默认数据初始化图表
+            var defaultStatusOption = {
+                title: {
+                    text: '考勤状态分布',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                },
+                series: [
+                    {
+                        name: '考勤状态',
+                        type: 'pie',
+                        radius: '50%',
+                        data: [
+                            {value: 60, name: '正常'},
+                            {value: 15, name: '迟到'},
+                            {value: 5, name: '早退'},
+                            {value: 10, name: '缺勤'},
+                            {value: 10, name: '请假'}
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            
+            var defaultTrendOption = {
+                title: {
+                    text: '近7天出勤趋势',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['正常', '迟到', '缺勤'],
+                    bottom: 0
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['1月1日', '1月2日', '1月3日', '1月4日', '1月5日', '1月6日', '1月7日']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name: '正常',
+                        type: 'line',
+                        data: [45, 48, 50, 47, 52, 55, 58],
+                        smooth: true
+                    },
+                    {
+                        name: '迟到',
+                        type: 'line',
+                        data: [8, 6, 5, 7, 4, 3, 2],
+                        smooth: true
+                    },
+                    {
+                        name: '缺勤',
+                        type: 'line',
+                        data: [2, 1, 2, 1, 0, 1, 0],
+                        smooth: true
+                    }
+                ]
+            };
+            
+            console.log('Applying default options...');
+            // 应用默认数据
+            statusChart.setOption(defaultStatusOption);
+            trendChart.setOption(defaultTrendOption);
+            console.log('Default options applied');
+
+            // 模拟数据，用于测试
+            var mockAttendanceStatusData = {
+                statusData: [
+                    {value: 1, name: '正常'},
+                    {value: 0, name: '迟到'},
+                    {value: 1, name: '早退'},
+                    {value: 1, name: '缺勤'},
+                    {value: 0, name: '请假'}
+                ]
+            };
+
+            var mockAttendanceTrendData = {
+                dates: ['2026-03-10', '2026-03-11', '2026-03-12', '2026-03-13', '2026-03-14', '2026-03-15', '2026-03-16'],
+                normalCounts: [0, 0, 0, 0, 0, 0, 1],
+                lateCounts: [0, 0, 0, 0, 0, 0, 0],
+                absentCounts: [0, 0, 0, 0, 0, 0, 1]
+            };
+
+            // 获取考勤状态数据
+            function getAttendanceStatusData() {
+                console.log('Fetching attendance status data...');
+                // 先使用模拟数据
+                console.log('Using mock attendance status data:', mockAttendanceStatusData);
+                var statusOption = {
+                    title: {
+                        text: '考勤状态分布',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left'
+                    },
+                    series: [
+                        {
+                            name: '考勤状态',
+                            type: 'pie',
+                            radius: '50%',
+                            data: mockAttendanceStatusData.statusData,
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+                statusChart.setOption(statusOption);
+
+                // 然后尝试从后端获取真实数据
+                $.ajax({
+                    url: '/api/visual/attendanceStatus',
+                    type: 'GET',
+                    success: function(data) {
+                        console.log('Attendance status data received:', data);
+                        var statusOption = {
+                            title: {
+                                text: '考勤状态分布',
+                                left: 'center'
+                            },
+                            tooltip: {
+                                trigger: 'item'
+                            },
+                            legend: {
+                                orient: 'vertical',
+                                left: 'left'
+                            },
+                            series: [
+                                {
+                                    name: '考勤状态',
+                                    type: 'pie',
+                                    radius: '50%',
+                                    data: data.statusData,
+                                    emphasis: {
+                                        itemStyle: {
+                                            shadowBlur: 10,
+                                            shadowOffsetX: 0,
+                                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                        }
+                                    }
+                                }
+                            ]
+                        };
+                        statusChart.setOption(statusOption);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching attendance status data:', error);
+                        console.error('XHR status:', xhr.status);
+                        console.error('Response text:', xhr.responseText);
+                        // 继续使用模拟数据
+                    }
+                });
+            }
+
+            // 获取出勤趋势数据
+            function getAttendanceTrendData() {
+                console.log('Fetching attendance trend data...');
+                // 先使用模拟数据
+                console.log('Using mock attendance trend data:', mockAttendanceTrendData);
+                var trendOption = {
+                    title: {
+                        text: '近7天出勤趋势',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['正常', '迟到', '缺勤'],
+                        bottom: 0
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: mockAttendanceTrendData.dates
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name: '正常',
+                            type: 'line',
+                            data: mockAttendanceTrendData.normalCounts,
+                            smooth: true
+                        },
+                        {
+                            name: '迟到',
+                            type: 'line',
+                            data: mockAttendanceTrendData.lateCounts,
+                            smooth: true
+                        },
+                        {
+                            name: '缺勤',
+                            type: 'line',
+                            data: mockAttendanceTrendData.absentCounts,
+                            smooth: true
+                        }
+                    ]
+                };
+                trendChart.setOption(trendOption);
+
+                // 然后尝试从后端获取真实数据
+                $.ajax({
+                    url: '/api/visual/attendanceTrend',
+                    type: 'GET',
+                    success: function(data) {
+                        console.log('Attendance trend data received:', data);
+                        var trendOption = {
+                            title: {
+                                text: '近7天出勤趋势',
+                                left: 'center'
+                            },
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            legend: {
+                                data: ['正常', '迟到', '缺勤'],
+                                bottom: 0
+                            },
+                            xAxis: {
+                                type: 'category',
+                                data: data.dates
+                            },
+                            yAxis: {
+                                type: 'value'
+                            },
+                            series: [
+                                {
+                                    name: '正常',
+                                    type: 'line',
+                                    data: data.normalCounts,
+                                    smooth: true
+                                },
+                                {
+                                    name: '迟到',
+                                    type: 'line',
+                                    data: data.lateCounts,
+                                    smooth: true
+                                },
+                                {
+                                    name: '缺勤',
+                                    type: 'line',
+                                    data: data.absentCounts,
+                                    smooth: true
+                                }
+                            ]
+                        };
+                        trendChart.setOption(trendOption);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching attendance trend data:', error);
+                        console.error('XHR status:', xhr.status);
+                        console.error('Response text:', xhr.responseText);
+                        // 继续使用模拟数据
+                    }
+                });
+            }
+
+            // 尝试获取数据
+            getAttendanceStatusData();
+            getAttendanceTrendData();
+
+            // 响应式调整
+            window.addEventListener('resize', function() {
+                statusChart.resize();
+                trendChart.resize();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宿舍管理系统</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <!-- 自定义CSS -->
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <!-- 大屏专用CSS -->
+    <link rel="stylesheet" th:href="@{/static/css/dashboard.css}" th:if="${#strings.startsWith(#httpServletRequest.servletPath, '/dashboard')}">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">宿舍管理系统</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">大屏监控</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dorm/list">宿舍管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/task/list">任务管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/schedule/list">排班管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/attendance/list">考勤管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/list">人员管理</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">退出登录</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-12">
+                <!-- 页面内容 -->
+                <div th:fragment="content">
+                    <!-- 子页面内容将插入这里 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">© 2026 宿舍管理系统</span>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 通用JS -->
+    <script src="/static/js/common.js"></script>
+    <!-- 大屏专用JS -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js" th:if="${#strings.startsWith(#httpServletRequest.servletPath, '/dashboard')}"></script>
+    <script src="/static/js/dashboard.js" th:if="${#strings.startsWith(#httpServletRequest.servletPath, '/dashboard')}"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+/* 通用样式 */
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* 导航栏样式 */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* 卡片样式 */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* 按钮样式 */
+.btn {
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* 表格样式 */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+/* 表单样式 */
+.form-control {
+    border-radius: 4px;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+/* 页面标题样式 */
+h3 {
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+/* 徽章样式 */
+.badge {
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+/* 页脚样式 */
+.footer {
+    margin-top: 40px;
+    border-top: 1px solid #dee2e6;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
