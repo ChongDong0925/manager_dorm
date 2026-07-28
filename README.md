@@ -64,8 +64,9 @@ MySQL 8.0+
 
 ## 📁 完整项目目录（点击展开查看）
 <details>
-<summary>
-  
+<summary>👉 点击展开：完整项目树形目录</summary>
+
+```text
 dorm_maintain_system/  // 项目根目录
 ├── src/
 │   ├── main/
@@ -185,7 +186,9 @@ dorm_maintain_system/  // 项目根目录
 │                   └── dorm_maintain/
 │                       └── DormMaintainApplicationTests.java // 项目测试启动类
 └── pom.xml  // Maven依赖配置文件（SpringBoot核心/数据库/前端/文件处理等依赖）
-</summary>
+
+</details>
+```
 
 ## 🚀 本地部署教程
 ### 1. 环境准备
@@ -210,7 +213,7 @@ Maven 加载全部依赖
 本项目基于 MIT License 开源，可免费学习、商用、二次修改，保留原版权声明即可。
 Copyright © 2026 ChongDong0925
 plaintext
-
+```
 # 二、网页提交报错「File could not be edited」彻底解决方案
 网页编辑器存在缓存/权限bug，**优先本地Git推送**，操作步骤：
 1. Git Bash进入项目根目录 `F:\Freework\manager_dorm`
@@ -224,3 +227,4 @@ git add README.md
 git commit -m "优化README排版，修复折叠语法，精简截图展示"
 git push
 浏览器 Ctrl+F5 强制刷新仓库首页，即可看到更新后的 README
+```
