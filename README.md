@@ -1,10 +1,10 @@
-# 🏠 manager_dorm 可视化高校宿舍后勤管理系统
+# 🏠manager_dorm可视化高校宿舍后勤管理系统
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Java 17](https://img.shields.io/badge/JDK-17-blue.svg)]
 [![SpringBoot 3.2](https://img.shields.io/badge/SpringBoot-3.2-orange.svg)]
 [![MySQL8](https://img.shields.io/badge/MySQL-8.0-lightblue.svg)]
 
-## 📋 目录导航
+## 📋目录导航
 - [项目简介](#📖-项目简介)
 - [核心功能](#✨-核心功能)
 - [技术栈](#🛠-技术栈)
@@ -14,11 +14,11 @@
 - [配套文档](#📎-配套文档)
 - [开源协议](#📄-开源协议)
 
-## 📖 项目简介
+## 📖项目简介
 本系统基于 SpringBoot3+Thymeleaf 开发，面向高校宿管、后勤维修班组打造一体化管理平台。
 一站式解决宿舍信息、维修人员、维修工单、排班考勤管理，内置 ECharts 数据可视化大屏+模拟监控播放模块，课程设计/毕设可直接使用。
 
-## ✨ 核心功能
+## ✨核心功能
 - 🔐 用户权限：账号注册登录，SpringSecurity 身份校验
 - 🛏 宿舍管理：楼栋、房间增删改查，房间状态管控
 - 👷 维修人员：班组、人员信息维护管理
@@ -28,7 +28,7 @@
 - 📊 可视化大屏：任务统计、出勤趋势、完成率ECharts图表
 - 🎥 模拟监控：本地视频播放，模拟宿舍楼实时监控画面
 
-## 🛠 技术栈
+## 🛠技术栈
 ### 后端
 - Java 17 | Spring Boot 3.2.0
 - Spring Security 权限框架
@@ -45,21 +45,19 @@
 ### 数据库
 MySQL 8.0+
 
-## 🖼 系统功能截图
-4 软件功能
+## 🖼系统功能截图
 1 用户功能模块与系统首页实现
-<img width="415" height="229" alt="image" src="https://github.com/user-attachments/assets/75be6dda-2274-4404-b513-22436c2a95c1" />
-图1 用户注册页
-在用户登录方面，系统提供了登录页面，如图2所示，用户输入用户名和密码后，系统通过后台程序对输入信息进行校验，并与数据库中的用户数据进行比对，从而实现身份认证。登录成功后，系统将用户重定向至系统首页。
-<img width="415" height="229" alt="image" src="https://github.com/user-attachments/assets/72e1ba55-597e-435a-bef9-ebd4a6a41635" />
-图2 用户登录页
-系统首页是用户进入系统后的主要界面，其页面如图3至图5所示。首页可以查看宿舍的监控视频，并通过图表形式展示系统中的关键数据，包括维修任务数量、任务完成情况以及人员工作统计等信息。系统通过后台对相关数据进行统计处理，并将结果返回前端进行展示。通过这种可视化方式，可以使管理人员更加直观地了解系统运行状态，从而提高管理效率。
-<img width="415" height="229" alt="image" src="https://github.com/user-attachments/assets/d1dd61b3-dd62-4597-8dbd-f064c766179f" />
-图3 系统首页(一)
-<img width="415" height="229" alt="image" src="https://github.com/user-attachments/assets/703e0713-0124-4686-9fa6-d94e3006b1d6" />
-图4 系统首页（二）
 
-图5 监控视频页
+<img width="415" height="229" alt="image" src="https://github.com/user-attachments/assets/75be6dda-2274-4404-b513-22436c2a95c1" />
+
+<img width="415" height="229" alt="image" src="https://github.com/user-attachments/assets/72e1ba55-597e-435a-bef9-ebd4a6a41635" />
+
+<img width="415" height="229" alt="image" src="https://github.com/user-attachments/assets/d1dd61b3-dd62-4597-8dbd-f064c766179f" />
+
+<img width="415" height="229" alt="image" src="https://github.com/user-attachments/assets/703e0713-0124-4686-9fa6-d94e3006b1d6" />
+
+<img width="415" height="229" alt="image" src="https://github.com/user-attachments/assets/de9543c2-e80a-4707-9319-c2d6ddc5079b" />
+
 4.2 宿舍管理与任务管理模块实现
 宿舍管理模块主要用于对宿舍基本信息进行管理，是系统数据管理的重要组成部分。在宿舍管理列表页面，如图6所示中，系统以表格形式展示所有宿舍信息，包括宿舍编号、楼栋信息以及相关状态等。用户可以通过页面中的操作按钮对宿舍信息进行新增、修改和删除操作。在新增宿舍页面，如图7所示中，用户填写宿舍相关信息后提交，系统通过后台接口接收数据，并将其存储到数据库中。
 
