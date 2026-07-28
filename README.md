@@ -187,8 +187,8 @@ dorm_maintain_system/  // 项目根目录
 │                       └── DormMaintainApplicationTests.java // 项目测试启动类
 └── pom.xml  // Maven依赖配置文件（SpringBoot核心/数据库/前端/文件处理等依赖）
 
-</details>
 ```
+</details>
 
 ## 🚀 本地部署教程
 ### 1. 环境准备
@@ -213,18 +213,4 @@ Maven 加载全部依赖
 本项目基于 MIT License 开源，可免费学习、商用、二次修改，保留原版权声明即可。
 Copyright © 2026 ChongDong0925
 plaintext
-```
-# 二、网页提交报错「File could not be edited」彻底解决方案
-网页编辑器存在缓存/权限bug，**优先本地Git推送**，操作步骤：
-1. Git Bash进入项目根目录 `F:\Freework\manager_dorm`
-2. 拉取云端最新代码，避免冲突
-```bash
-git pull origin main
-记事本打开本地README.md，粘贴上面完整代码保存
-提交并推送
-bash
-git add README.md
-git commit -m "优化README排版，修复折叠语法，精简截图展示"
-git push
-浏览器 Ctrl+F5 强制刷新仓库首页，即可看到更新后的 README
 ```
