@@ -65,6 +65,7 @@ MySQL 8.0+
 ## 📁 完整项目目录（点击展开查看）
 <details>
 <summary>
+  
 dorm_maintain_system/  // 项目根目录
 ├── src/
 │   ├── main/
@@ -184,7 +185,6 @@ dorm_maintain_system/  // 项目根目录
 │                   └── dorm_maintain/
 │                       └── DormMaintainApplicationTests.java // 项目测试启动类
 └── pom.xml  // Maven依赖配置文件（SpringBoot核心/数据库/前端/文件处理等依赖）
-
 </summary>
 
 ## 🚀 本地部署教程
